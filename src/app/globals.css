@@ -1,26 +1,466 @@
 @import "tailwindcss";
+/* Streamdown ships Tailwind classes; scan them so they get generated. */
+@source "../../node_modules/streamdown/dist/*.js";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Composio brand tokens (brand.composio.dev). FOR YOU = light, DEV = dark.
+   The interface is achromatic; #51a2ff is a spot colour for interactive state. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --bg: #f6f6f6;
+  --card: #ffffff;
+  --popover: #fafafa;
+  --fg: #0f0f0f;
+  --fg-2: rgb(15 15 15 / 0.68);
+  --fg-3: rgb(15 15 15 / 0.48);
+  --fg-4: rgb(15 15 15 / 0.26);
+  --line: #eaeaea;
+  --hairline: rgb(15 15 15 / 0.15);
+  --hover: #f5f5f5;
+  --brand: #51a2ff;
+  --brand-hover: #3590f5;
+  --brand-active: #1f7ee8;
+  --brand-ink: #0b6fd6;
+  --on-brand: #0f0f0f;
+  --brand-wash: rgb(81 162 255 / 0.1);
+  --success: oklch(0.546 0.16 155.8);
+  --warning: oklch(0.666 0.16 75);
+  --danger: oklch(0.577 0.215 27.3);
+  --cta: #0f0f0f;
+  --on-cta: #ffffff;
+  --elev: 0 0 0 1px rgb(15 15 15 / 0.04), 0 1px 2px rgb(15 15 15 / 0.05),
+    0 12px 32px -14px rgb(15 15 15 / 0.14);
+  --pop: 0 0 0 1px rgb(15 15 15 / 0.06), 0 2px 6px rgb(15 15 15 / 0.05),
+    0 24px 56px -16px rgb(15 15 15 / 0.24);
+  --grid: rgb(15 15 15 / 0.045);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f0f0f;
+  --card: #1e1e1e;
+  --popover: #2a2a2a;
+  --fg: #ffffff;
+  --fg-2: rgb(255 255 255 / 0.72);
+  --fg-3: rgb(255 255 255 / 0.5);
+  --fg-4: rgb(255 255 255 / 0.28);
+  --line: #2c2c2c;
+  --hairline: rgb(255 255 255 / 0.15);
+  --hover: #262626;
+  --brand-hover: #51a2ff;
+  --brand-active: #51a2ff;
+  --brand-ink: #51a2ff;
+  --brand-wash: rgb(81 162 255 / 0.13);
+  --success: oklch(0.648 0.17 155.8);
+  --warning: oklch(0.758 0.163 75);
+  --danger: oklch(0.637 0.208 25.3);
+  --cta: #ffffff;
+  --on-cta: #0f0f0f;
+  --elev: 0 0 0 1px rgb(255 255 255 / 0.05), 0 12px 32px -14px rgb(0 0 0 / 0.7);
+  --pop: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 56px -16px rgb(0 0 0 / 0.8);
+  --grid: rgb(255 255 255 / 0.04);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-popover: var(--popover);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-fg-4: var(--fg-4);
+  --color-line: var(--line);
+  --color-hairline: var(--hairline);
+  --color-hover: var(--hover);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-wash: var(--brand-wash);
+  --color-on-brand: var(--on-brand);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-cta: var(--cta);
+  --color-on-cta: var(--on-cta);
+  --font-sans: var(--font-geist-sans), "Geist", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --shadow-elevated: var(--elev);
+  --shadow-pop: var(--pop);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--line);
+  }
+  html {
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+  /* Sans never goes bold: emphasis is weight 500 at most. */
+  b,
+  strong {
+    font-weight: 500;
+  }
+  h1,
+  h3,
+  h4 {
+    font-weight: 400;
+  }
+  h2 {
+    font-weight: 500;
+  }
+  ::selection {
+    background: var(--brand-wash);
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand-ink);
+    outline-offset: 2px;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: default;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility mono-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---------- Instant gradient (hero moments only) ---------- */
+.instant-mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.instant-mesh span {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  opacity: 0.85;
+  will-change: transform;
+}
+.instant-mesh span:nth-child(1) {
+  width: 52%;
+  aspect-ratio: 1;
+  left: -8%;
+  top: 10%;
+  background: #0089ff;
+  opacity: 0.55;
+  animation: drift-a 22s ease-in-out infinite alternate;
+}
+.instant-mesh span:nth-child(2) {
+  width: 46%;
+  aspect-ratio: 1;
+  right: -6%;
+  top: 22%;
+  background: #00ffff;
+  opacity: 0.5;
+  animation: drift-b 26s ease-in-out infinite alternate;
+}
+.instant-mesh span:nth-child(3) {
+  width: 40%;
+  aspect-ratio: 1;
+  left: 30%;
+  top: -20%;
+  background: #fdffc2;
+  opacity: 0.6;
+  animation: drift-c 30s ease-in-out infinite alternate;
+}
+[data-theme="dark"] .instant-mesh span:nth-child(1) {
+  background: #0007cd;
+  opacity: 0.55;
+}
+[data-theme="dark"] .instant-mesh span:nth-child(2) {
+  background: #0089ff;
+  opacity: 0.28;
+}
+[data-theme="dark"] .instant-mesh span:nth-child(3) {
+  background: #02056a;
+  opacity: 0.7;
+}
+@keyframes drift-a {
+  to {
+    transform: translate3d(14%, 10%, 0) scale(1.15);
+  }
+}
+@keyframes drift-b {
+  to {
+    transform: translate3d(-16%, -8%, 0) scale(0.9);
+  }
+}
+@keyframes drift-c {
+  to {
+    transform: translate3d(-10%, 18%, 0) scale(1.2);
+  }
+}
+
+.grid-texture {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ---------- Motion primitives ---------- */
+@keyframes shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--hover) 25%, var(--line) 50%, var(--hover) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.45s var(--ease-out-expo) both;
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.streaming-caret > :last-child::after,
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: caret 1s steps(1) infinite;
+}
+
+/* Composio dot-matrix activity indicator. */
+@keyframes dm-pulse {
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Answer text rendered by Streamdown, in brand type. */
+:is(.ps-prose, .ps-reasoning) a {
+  color: var(--brand-ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--brand-ink) 30%, transparent);
+  text-underline-offset: 3px;
+}
+:is(.ps-prose, .ps-reasoning) :where(strong, b) {
+  font-weight: 500;
+}
+.ps-prose > * {
+  max-width: 720px;
+}
+.ps-reasoning > div > :not(:last-child) {
+  margin-block-end: 0.5rem;
+}
+:is(.ps-prose, .ps-reasoning) :where(ul) {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+:is(.ps-prose, .ps-reasoning) :where(ol) {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+:is(.ps-prose, .ps-reasoning) :where(h1, h2, h3, h4) {
+  font-weight: 500;
+  font-size: 1.05em;
+}
+
+/* Live status line while the agent works. */
+.shimmer-text {
+  background: linear-gradient(90deg, var(--fg-3) 0%, var(--fg) 45%, var(--fg-3) 90%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 2.2s linear infinite;
+}
+
+
+/* Unmasking a hidden surname or email after a reveal. */
+@keyframes unblur {
+  from {
+    filter: blur(6px);
+    opacity: 0.2;
+    letter-spacing: 0.12em;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+    letter-spacing: normal;
+  }
+}
+.unblur {
+  animation: unblur 0.7s var(--ease-out-expo) both;
+}
+
+@keyframes charge-float {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  15% {
+    opacity: 1;
+    transform: none;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Odometer digits roll between values. */
+.odo-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+}
+.odo-digit > span {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.9s var(--ease-out-expo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .instant-mesh span {
+    animation: none !important;
+  }
+}
+
+/* Start screen: the brand's blurred block texture, panning left to right. */
+.mosaic {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #2b6cff, #0089ff 60%, #5cc8ff);
+}
+.mosaic-strip {
+  position: absolute;
+  top: -6%;
+  bottom: -6%;
+  left: 0;
+  display: flex;
+  width: 300%;
+  will-change: transform;
+  animation: mosaic-pan 75s linear infinite;
+}
+.mosaic-tile {
+  position: relative;
+  flex: 1 0 0;
+}
+.mosaic-tile span {
+  position: absolute;
+}
+.mosaic-base {
+  filter: blur(14px);
+}
+.mosaic-glow {
+  filter: blur(46px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation-duration: 38s;
+}
+.mosaic-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme="dark"] .mosaic {
+  background: linear-gradient(180deg, #02056a, #0007cd 60%, #02056a);
+}
+[data-theme="dark"] .mosaic-base {
+  filter: blur(14px) brightness(0.62) saturate(1.3);
+}
+[data-theme="dark"] .mosaic-glow {
+  opacity: 0.3;
+}
+@keyframes mosaic-pan {
+  from {
+    transform: translate3d(-66.6667%, 0, 0);
+  }
+  to {
+    transform: translate3d(-33.3333%, 0, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mosaic-strip {
+    animation: none;
+    transform: translate3d(-33.3333%, 0, 0);
+  }
 }

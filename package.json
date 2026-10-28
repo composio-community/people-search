@@ -6,12 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "smoke": "bun --env-file=.env.local --conditions react-server scripts/smoke-agent.ts",
+    "smoke:intro": "bun --env-file=.env.local --conditions react-server scripts/smoke-agent.ts intro"
   },
   "dependencies": {
+    "@ai-sdk/react": "3.0.285",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@openrouter/ai-sdk-provider": "2.10.0",
+    "ai": "6.0.282",
+    "geist": "^1.8.2",
+    "jose": "^6.2.13",
+    "lucide-react": "^1.62.0",
+    "motion": "^14.6.0",
     "next": "16.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "server-only": "^0.0.1",
+    "streamdown": "2.5.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

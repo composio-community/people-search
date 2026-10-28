@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "smoke": "bun --env-file=.env.local --conditions react-server scripts/smoke-agent.ts",
-    "smoke:intro": "bun --env-file=.env.local --conditions react-server scripts/smoke-agent.ts intro"
+    "lint": "eslint"
   },
   "dependencies": {
     "@ai-sdk/react": "3.0.285",

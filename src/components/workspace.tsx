@@ -380,11 +380,11 @@ export function Workspace({
           <section className="rise relative my-auto w-full max-w-[780px] bg-card shadow-pop">
             <div className="px-5 pt-9 pb-6 sm:px-14 sm:pt-14 sm:pb-10">
               <h1 className="text-[40px] leading-[1.02] tracking-[-0.035em] sm:text-[60px]">
-                <span className="sm:block">The best recruiter </span>
-                <span className="sm:block">out there.</span>
+                <span className="sm:block">Describe the hire. </span>
+                <span className="sm:block">Meet the people.</span>
               </h1>
               <p className="mt-4 max-w-[560px] text-[16px] leading-7 text-fg-2 sm:text-[17.5px]">
-                Describe the hire. Get the people, their verified email, and the exact price before you pay.
+                People Search finds them, their verified email, and the exact price before you pay.
               </p>
               <div className="mt-8">{composer(true)}</div>
               <ol className="mt-8 border-t border-line">

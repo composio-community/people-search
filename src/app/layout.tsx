@@ -13,7 +13,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "People Search · Composio Instant",
   description:
-    "Find the job, then the people hiring for it. An AI agent searches LinkedIn, Indeed, Glassdoor and Google Jobs, plus Apollo, Hunter and more, through Composio Instant: no API keys, pay per answer.",
+    "The best recruiter out there. Describe the hire and an AI sourcing agent finds the people, their verified email and the exact price before you pay. Apollo, Hunter, ContactOut and more through Composio Instant: no API keys, pay per answer.",
 };
 
 export const viewport: Viewport = {

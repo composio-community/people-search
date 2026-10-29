@@ -122,7 +122,7 @@ const blank = (v?: string) => (v && !/^[-–—]+$|^n\/?a$/i.test(v) ? v : undef
 
 /**
  * A ```jobs block, one posting per line:
- * `Company (domain) | Role | Location | Salary | Posted | Apply URL | Why it fits`.
+ * `Company (domain) | Role | Location | Salary | Posted | Posting URL | Why it's a lead`.
  * Missing values are "-"; the last row may still be half-written.
  */
 export function parseJobsBlock(raw: string): JobsBlock {

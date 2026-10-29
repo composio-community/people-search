@@ -10,7 +10,7 @@ const PAGE = 8;
 
 /** The question a "Who's hiring?" click sends for one posting. */
 export function whoIsHiring(job: JobRow) {
-  return `Who's hiring for the ${job.role} role at ${job.company}${job.domain ? ` (${job.domain})` : ""}? Find the likely hiring manager and a recruiter there.`;
+  return `Who's hiring for the ${job.role} role at ${job.company}${job.domain ? ` (${job.domain})` : ""}? Find the likely hiring manager and an in-house recruiter there.`;
 }
 
 /**
@@ -117,7 +117,7 @@ function JobRowView({ job, onWhoIsHiring, disabled }: { job: JobRow; onWhoIsHiri
           size="sm"
           disabled={disabled}
           onClick={onWhoIsHiring}
-          title="Find the likely hiring manager and a recruiter for this role"
+          title="Find the likely hiring manager and in-house recruiter for this role"
           className="hover:text-brand-ink hover:shadow-[inset_0_0_0_1px_var(--brand-ink)]"
         >
           <UserSearch className="h-3.5 w-3.5" /> Who&apos;s hiring
@@ -131,7 +131,7 @@ function JobRowView({ job, onWhoIsHiring, disabled }: { job: JobRow; onWhoIsHiri
               "inline-flex h-7 items-center gap-1.5 bg-cta px-2.5 font-mono text-[11px] uppercase tracking-[0.06em] text-on-cta transition-opacity hover:opacity-85",
             )}
           >
-            Apply <ArrowUpRight className="h-3.5 w-3.5" />
+            View posting <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         )}
       </div>

@@ -143,14 +143,14 @@ export function billsOnlyOnSuccess(p?: Price) {
   return Boolean(p && /\b(successful|found)\b/i.test(p.text));
 }
 
-/** Fallback prices seen on the Instant catalog (28 Oct 2026), shown until a live search returns them. */
+/** Fallback prices seen on the Instant catalog (29 Oct 2026), shown until a live search returns them. */
 export const KNOWN_PRICES: Record<string, Price> = {
   APOLLO_PEOPLE_SEARCH: parsePrice("$0 per request"),
   APOLLO_PEOPLE_ENRICHMENT: parsePrice(
-    "Estimated $0.02–$0.18 per person enriched (1–9 credits)",
+    "Estimated $0.02–$0.18 per person enriched (1–9 credits; waterfall may cost more)",
   ),
   APOLLO_BULK_PEOPLE_ENRICHMENT: parsePrice(
-    "Estimated $0.02–$0.18 per person enriched (1–9 credits)",
+    "Estimated $0.02–$0.18 per person enriched (1–9 credits; waterfall may cost more)",
   ),
   APOLLO_ORGANIZATION_SEARCH: parsePrice("Estimated $0.02 per organization search page"),
   APOLLO_GET_ORGANIZATION: parsePrice("Estimated $0.02 per organization retrieved"),

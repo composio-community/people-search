@@ -38,20 +38,24 @@ type User = { name?: string; email?: string; picture?: string };
 
 const SUGGESTIONS = [
   {
-    label: "Senior frontend roles in Berlin, posted this week",
-    text: "Find senior frontend engineering roles in Berlin posted in the last week.",
+    label: "Staff ML engineers in SF who've shipped LLM inference",
+    text: "Find staff ML engineers in San Francisco who've shipped LLM inference in production.",
   },
   {
-    label: "Remote founding-engineer jobs at AI startups",
-    text: "Find remote founding engineer jobs at AI startups.",
+    label: "Senior iOS engineers at fintechs in London",
+    text: "Find senior iOS engineers working at fintech companies in London.",
   },
   {
-    label: "Product designer jobs in New York paying $150k+",
-    text: "Find product designer jobs in New York with a listed salary of $150k or more.",
+    label: "Heads of Growth at Series B devtools startups",
+    text: "Find Heads of Growth at Series B devtools startups.",
   },
   {
-    label: "Series B devtools companies hiring platform engineers",
-    text: "Which Series B devtools companies are hiring platform engineers right now, and who leads those teams?",
+    label: "Founding designers who've worked at Linear or Vercel",
+    text: "Find founding designers who've worked at Linear or Vercel.",
+  },
+  {
+    label: "Companies hiring Rust engineers, and their hiring managers",
+    text: "Find companies hiring Rust engineers right now, and their likely hiring managers.",
   },
 ];
 
@@ -319,7 +323,7 @@ export function Workspace({
       model={model}
       autoFocus={hero}
       placeholder={
-        hero ? "Senior backend roles in London…" : "Ask a follow-up, or search for another role…"
+        hero ? "Senior backend engineers in Berlin…" : "Ask a follow-up, or describe another hire…"
       }
     />
   );
@@ -376,12 +380,11 @@ export function Workspace({
           <section className="rise relative my-auto w-full max-w-[780px] bg-card shadow-pop">
             <div className="px-5 pt-9 pb-6 sm:px-14 sm:pt-14 sm:pb-10">
               <h1 className="text-[40px] leading-[1.02] tracking-[-0.035em] sm:text-[60px]">
-                <span className="sm:block">Find the job. </span>
-                <span className="sm:block">Meet who&apos;s hiring.</span>
+                <span className="sm:block">The best recruiter </span>
+                <span className="sm:block">out there.</span>
               </h1>
               <p className="mt-4 max-w-[560px] text-[16px] leading-7 text-fg-2 sm:text-[17.5px]">
-                Describe the role you want. Composio searches LinkedIn, Indeed, Glassdoor and Google Jobs, then finds
-                the hiring manager behind any posting. Searches cost a fraction of a cent.
+                Describe the hire. Get the people, their verified email, and the exact price before you pay.
               </p>
               <div className="mt-8">{composer(true)}</div>
               <ol className="mt-8 border-t border-line">

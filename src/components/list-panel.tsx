@@ -62,7 +62,7 @@ export function ListPanel({
                   <div>
                     <Star className="mx-auto h-5 w-5 text-fg-4" />
                     <p className="mt-3 text-[14px] leading-6 text-fg-2">
-                      Save people from any board to collect them here, then export the list as CSV.
+                      Save people from any board to build your shortlist here, then export it as CSV.
                     </p>
                   </div>
                 </div>

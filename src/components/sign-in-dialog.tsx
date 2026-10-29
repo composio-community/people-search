@@ -44,8 +44,8 @@ export function SignInDialog({ ref, prompt }: { ref: Ref<HTMLDialogElement>; pro
           Sign in with Composio
         </h2>
         <p className="mt-2 text-[14.5px] leading-6 text-fg-2">
-          People Search runs on your Composio account. Job searches cost a fraction of a cent and work emails a few
-          cents, billed to your Composio wallet. You see each price before anything runs.
+          People Search runs on your Composio account. Candidate searches start free and work emails cost a few cents
+          each, billed to your Composio wallet. You see each price before anything runs.
         </p>
 
         {prompt && (

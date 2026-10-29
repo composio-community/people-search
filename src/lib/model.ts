@@ -2,10 +2,10 @@ import "server-only";
 
 /**
  * The agent runs through OpenRouter, so any model there works: the default is
- * a cheap open-weight model with solid tool calling. Set AGENT_MODEL to switch,
- * e.g. "minimax/minimax-m3.1-flash" or "anthropic/claude-opus-5.5".
+ * Gemini 4 Argon. Set AGENT_MODEL to switch, e.g. "deepseek/deepseek-v4.1-flash"
+ * (much cheaper) or "anthropic/claude-opus-5.5".
  */
-export const MODEL = process.env.AGENT_MODEL || "deepseek/deepseek-v4.1-flash";
+export const MODEL = process.env.AGENT_MODEL || "google/gemini-4-argon";
 
 const VENDORS: Record<string, string> = {
   deepseek: "DeepSeek",
@@ -18,7 +18,7 @@ const VENDORS: Record<string, string> = {
   claude: "Claude",
 };
 
-/** "deepseek/deepseek-v4.1-flash" → "DeepSeek V4.1 Flash" */
+/** "google/gemini-4-argon" → "Gemini 4 Argon", "deepseek/deepseek-v4.1-flash" → "DeepSeek V4.1 Flash" */
 export function modelLabel(id = MODEL) {
   const name = id.split("/").pop() ?? id;
   return name

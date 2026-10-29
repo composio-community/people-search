@@ -24,7 +24,7 @@ Open the URL `next dev` prints and sign in with Composio. New Composio wallets s
 | Variable | |
 |---|---|
 | `OPENROUTER_API_KEY` | Required. The agent runs on `AGENT_MODEL` through OpenRouter (AI SDK OpenRouter provider). |
-| `AGENT_MODEL` | Defaults to `deepseek/deepseek-v4.1-flash` ($0.14 / $0.42 per M tokens). `minimax/minimax-m3.1-flash`, `z-ai/glm-5.3-flash` and `anthropic/claude-opus-5.5` also work. |
+| `AGENT_MODEL` | Defaults to `google/gemini-4-argon` ($2 / $10 per M tokens). `deepseek/deepseek-v4.1-flash` ($0.14 / $0.42), `minimax/minimax-m3.1-flash`, `z-ai/glm-5.3-flash` and `anthropic/claude-opus-5.5` also work. |
 | `SESSION_SECRET` | 32+ random characters; encrypts the session cookie (`openssl rand -base64 48`). |
 | `APP_URL` | Optional. Fixes the OAuth redirect origin when running behind a proxy. |
 
@@ -49,10 +49,12 @@ browser ──/api/auth/login──▶ connect.composio.dev/oauth/authorize ─�
 ```
 
 - `src/lib/agent.ts`: `streamText` with three Composio meta tools (wrapped so they never throw and report `durationMs`, charge and found people) Boards are fenced blocks in the reply (```` ```people ````, ```` ```companies ````, and ```` ```intro ```` for drafts), so they stream row by row like the text around them; `src/lib/blocks.ts` parses them, half-written or not. Enforces the per-request spend cap and a research budget, refuses workbench calls, and stops and retries a generation that writes a tool call as text or runs away. The MCP tool list is cached per sign-in, so a follow-up starts the model while the connection opens. Logs per-phase timings as `[agent]` lines.
-- `src/app/api/reveal` + `src/lib/reveal-*`: Reveal tries Instant providers one at a time, cheapest first (Tomba, then Hunter, then Apollo; ZeroBounce to verify), stops at the first hit, and streams each attempt to the row.
+- `src/app/api/reveal` + `src/lib/reveal-*`: Reveal tries Instant providers one at a time, cheapest first (Tomba, then Hunter, then Apollo; Apollo first when the surname is masked, since only Apollo can resolve its own record; ZeroBounce to verify), stops at the first email, and streams each attempt and its charge to the row.
 - `src/lib/entities.ts`: turns any provider payload into people and companies (Apollo ids, masked surnames, Hunter verification, ContactOut profiles keyed by LinkedIn URL).
 - `src/components/`: the workspace. `chat-state.ts` derives contacts and spend from the `useChat` messages and lays each message out into groups, text, boards and notices; `timeline.tsx` and `text-segment.tsx` render them.
 
-`pnpm smoke` (and `pnpm smoke:intro` for the intro flow) runs the real agent loop for two turns against the configured model with the MCP server replaced by fictional data. It costs a fraction of a cent and nothing from a Composio wallet.
-
 Design follows [brand.composio.dev](https://brand.composio.dev): Geist and JetBrains Mono only, sans at 400/500, achromatic surfaces with `#51a2ff` as a spot colour for interactive state, and the Instant gradient for hero moments. Light and dark themes both work.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

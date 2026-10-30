@@ -1,6 +1,6 @@
 # People Search · Composio Instant
 
-Describe the hire in plain words ("staff ML engineers in SF who've shipped LLM inference") and People Search's AI sourcing agent turns the brief into a shortlist, with a note on why each candidate fits, through [Composio Instant](https://composio.dev/instant): Apollo, Hunter, ContactOut and other paid data providers, billed per call to the signed-in user's Composio wallet with no API keys or subscriptions. You see the exact price of each verified email before you pay for it.
+Describe the hire in plain words ("staff ML engineers in SF who've shipped LLM inference") and People Search's AI sourcing agent turns the brief into a ranked shortlist through [Composio Instant](https://composio.dev/instant). It finds candidates with Apollo and other data providers, has [Jev](https://typesafe.ai), TypeSafe AI's evaluation model, score each one against your must-haves, and writes a note on why each person fits. Every call is billed to the signed-in user's Composio wallet with no API keys or subscriptions, and you see the exact price of each email before you pay for it.
 
 - **Sign in** is the OAuth flow of `connect.composio.dev/mcp` (OAuth 2.1, PKCE, dynamic client registration). The bearer token it returns is what the agent sends to the Composio MCP server, so every Instant call bills the user who signed in.
 - **Search is free.** Apollo people search returns titles, companies, first names and masked surnames at $0.

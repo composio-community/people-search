@@ -72,6 +72,8 @@ export type Price = {
   max: number;
   discount: number;
   free: boolean;
+  /** Billed by input token ("$0.042 per 1 million input tokens"): min and max are per token. */
+  perToken?: boolean;
 };
 
 export type StepInfo = {

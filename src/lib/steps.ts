@@ -41,6 +41,9 @@ const COUNT_KEYS = ["per_page", "page_size", "limit", "size", "num_results", "ma
 const LIST_KEYS = ["details", "people", "persons", "records", "emails", "linkedin_urls", "ids", "domains"];
 /** What providers return when no count is given; assumed so the estimate errs high. */
 const DEFAULT_PAGE = 25;
+/** Token-priced calls (Jev): the arguments at ~4 characters a token, plus the model's own prompt (measured ~340; rounded up). */
+const CHARS_PER_TOKEN = 4;
+const TOKEN_OVERHEAD = 400;
 
 export type StepEstimate = { qty: number; min: number; max: number; perItem: boolean; guessedQty: boolean };
 
@@ -48,6 +51,10 @@ export type StepEstimate = { qty: number; min: number; max: number; perItem: boo
 export function estimateStep(step: StepInfo): StepEstimate | null {
   const price = step.price;
   if (!price) return null;
+  if (price.perToken) {
+    const qty = Math.ceil(JSON.stringify(step.args).length / CHARS_PER_TOKEN) + TOKEN_OVERHEAD;
+    return { qty, min: price.min * qty, max: price.max * qty, perItem: false, guessedQty: true };
+  }
   const perItem = PER_ITEM.test(price.text);
   let qty = 1;
   let guessedQty = false;

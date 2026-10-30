@@ -24,6 +24,7 @@ const TOOLKIT_NAMES: Record<string, string> = {
   lusha: "Lusha",
   tomba: "Tomba",
   icypeas: "Icypeas",
+  jev: "Jev",
   openalex: "OpenAlex",
   firecrawl: "Firecrawl",
   brightdata: "Bright Data",
@@ -84,6 +85,15 @@ export function parsePrice(description: string, discount = 0): Price {
   const amounts = [...description.matchAll(/\$\s?(\d+(?:\.\d+)?)/g)].map((m) =>
     parseFloat(m[1]),
   );
+  // "$0.042 per 1 million input tokens" is billed by the token.
+  const tokens = /\bper\s+([\d,.]+)\s*(million|thousand|m|k)?\s+(?:input\s+)?tokens?\b/i.exec(description);
+  if (tokens) {
+    const scale = /^(million|m)$/i.test(tokens[2] ?? "") ? 1e6 : /^(thousand|k)$/i.test(tokens[2] ?? "") ? 1e3 : 1;
+    const perToken = (1 - Math.min(Math.max(discount, 0), 100) / 100) / (parseFloat(tokens[1].replace(/,/g, "")) * scale);
+    const min = (amounts[0] ?? 0) * perToken;
+    const max = (amounts[1] ?? amounts[0] ?? 0) * perToken;
+    return { text: description, min, max, discount, free: max === 0 && amounts.length > 0, perToken: true };
+  }
   // "$0.005 per 10 requests" is $0.0005 a request.
   const batch = /\bper\s+(\d[\d,]*)\s+[a-z]/i.exec(description);
   const perUnit = batch ? Math.max(1, parseInt(batch[1].replace(/,/g, ""), 10)) : 1;
@@ -119,6 +129,8 @@ export function pricesFromSearch(json: unknown): Record<string, Price> {
  */
 export function formatUsd(n: number, digits?: number) {
   if (!n) return "$0";
+  // token-priced calls (Jev) cost millionths of a dollar
+  if (digits === undefined && n > 0 && n < 0.0001) return "<$0.0001";
   if (digits !== undefined) return `$${n.toFixed(digits)}`;
   const fixed = n.toFixed(n < 0.01 ? 4 : n < 1 ? 3 : 2);
   const [whole, frac = ""] = fixed.split(".");
@@ -167,4 +179,6 @@ export const KNOWN_PRICES: Record<string, Price> = {
   ZEROBOUNCE_VALIDATE_EMAIL: parsePrice("$0.019 per validation credit", 83),
   COMPANYENRICH_SEARCH_PEOPLE: parsePrice("$0.019 per person returned"),
   PEOPLEDATALABS_PEOPLE_SEARCH_ELASTIC: parsePrice("$0.28 per person returned", 10),
+  JEV_EVALUATE_STATE: parsePrice("$0.042 per 1 million input tokens; output tokens free"),
+  JEV_LIST_MODELS: parsePrice("$0 per request"),
 };
